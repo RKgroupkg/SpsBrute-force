@@ -1,4 +1,4 @@
-#### SpsBrute-force
+### SpsBrute-force
 
 [![GitHub stars](https://img.shields.io/github/stars/RKgroupkg/SpsBrute-force?style=social)](https://github.com/RKgroupkg/SpsBrute-force)
 [![Forks](https://img.shields.io/github/forks/RKgroupkg/SpsBrute-force?style=social)](https://github.com/RKgroupkg/SpsBrute-force/forks)
@@ -151,7 +151,7 @@ After cloning the repository, follow these steps to run the `SpsBrute.py` script
     ```
 
     
-#### Disclaimer
+### Disclaimer
 Please note: This script is intended for educational and ethical testing purposes only. Use it responsibly, and do not attempt unauthorized access to any systems. The author and the repository are not responsible for any misuse or damages caused by running this script
 
 
