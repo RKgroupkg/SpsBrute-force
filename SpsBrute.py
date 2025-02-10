@@ -1,4 +1,4 @@
-```
+"""
 
 MIT License
 
@@ -24,7 +24,7 @@ SOFTWARE.
 
 
 devloped by Rkgroup
-```
+"""
 
 
 import asyncio
