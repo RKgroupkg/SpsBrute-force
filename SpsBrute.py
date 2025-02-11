@@ -26,7 +26,6 @@ SOFTWARE.
 devloped by Rkgroup
 """
 
-
 import asyncio
 import aiohttp
 import argparse
@@ -159,14 +158,109 @@ def parse_args():
     parser.add_argument("-c", "--concurrency", type=int, default=50, help="Maximum concurrent requests")
     return parser.parse_args()
 
+
+async def interactive_shell():
+    """Interactive shell for SPS Purnea ERP Cracker"""
+    print_welcome()
+
+    while True:
+        try:
+            # Get user input with option to exit
+            username = await async_input(f"{Fore.CYAN}\nEnter Admission ID (or 'exit'/'q'): {Style.RESET_ALL}")
+            if not username or username.lower() in ('exit', 'q'):
+                break
+
+            # Get parameters with validation
+            start_year = await get_valid_year("Start year (default 2008): ", 2008)
+            end_year = await get_valid_year(f"End year (default 2012, must be >= {start_year}): ", 2012, min_val=start_year)
+            concurrency = await get_positive_int("Concurrency level (default 50): ", 50)
+
+            # Run the attack
+            await main_attack(username, start_year, end_year, concurrency)
+
+        except (KeyboardInterrupt, asyncio.CancelledError):
+            print(f"\n{Fore.YELLOW}Operation cancelled{Style.RESET_ALL}")
+            break
+
+def print_welcome():
+    welcome = f"""
+{Fore.RED}
+
+░██████╗██████╗░░██████╗
+██╔════╝██╔══██╗██╔════╝
+╚█████╗░██████╔╝╚█████╗░
+░╚═══██╗██╔═══╝░░╚═══██╗
+██████╔╝██║░░░░░██████╔╝
+╚═════╝░╚═╝░░░░░╚═════╝░
+
+██████╗░██████╗░██╗░░░██╗████████╗███████╗
+██╔══██╗██╔══██╗██║░░░██║╚══██╔══╝██╔════╝
+██████╦╝██████╔╝██║░░░██║░░░██║░░░█████╗░░
+██╔══██╗██╔══██╗██║░░░██║░░░██║░░░██╔══╝░░
+██████╦╝██║░░██║╚██████╔╝░░░██║░░░███████╗
+╚═════╝░╚═╝░░╚═╝░╚═════╝░░░░╚═╝░░░╚══════╝
+
+
+{Fore.YELLOW}
+🔥◇ SPS BRUTE - Interactive Shell 🔥
+{Fore.GREEN}
+Developed by ○●  | RKGroup
+{Style.RESET_ALL}
+💡◇ Type 'exit' or 'q' at any prompt to quit | Ctrl+C to cancel operation
+"""
+    print(welcome)
+
+async def async_input(prompt: str) -> str:
+    """Asynchronous input to prevent event loop blocking"""
+    return await asyncio.get_event_loop().run_in_executor(None, input, prompt)
+
+async def get_valid_year(prompt: str, default: int, min_val: int = 0) -> int:
+    """Get validated year input with async handling"""
+    while True:
+        try:
+            response = (await async_input(f"{Fore.CYAN}{prompt}{Style.RESET_ALL}")).strip()
+            if response.lower() in ('exit', 'q'):
+                raise EOFError()
+            if not response:
+                return default
+            year = int(response)
+            if year < min_val:
+                print(f"{Fore.RED}Year must be >= {min_val}{Style.RESET_ALL}")
+                continue
+            return year
+        except ValueError:
+            print(f"{Fore.RED}Invalid year format{Style.RESET_ALL}")
+
+async def get_positive_int(prompt: str, default: int) -> int:
+    """Get validated positive integer input"""
+    while True:
+        try:
+            response = (await async_input(f"{Fore.CYAN}{prompt}{Style.RESET_ALL}")).strip()
+            if response.lower() in ('exit', 'q'):
+                raise EOFError()
+            if not response:
+                return default
+            value = int(response)
+            if value <= 0:
+                raise ValueError
+            return value
+        except ValueError:
+            print(f"{Fore.RED}Must be positive integer{Style.RESET_ALL}")
+
 if __name__ == "__main__":
+    import sys
     try:
-        args = parse_args()
-        asyncio.run(main_attack(
-            args.username,
-            args.start_year,
-            args.end_year,
-            args.concurrency
-        ))
+        if len(sys.argv) == 1:
+            # Start interactive shell if no arguments
+            asyncio.run(interactive_shell())
+        else:
+            # Existing CLI functionality
+            args = parse_args()
+            asyncio.run(main_attack(
+                args.username,
+                args.start_year,
+                args.end_year,
+                args.concurrency
+            ))
     except KeyboardInterrupt:
         logger.info(f"\n{Fore.RED}🛑 Operation cancelled by user{Style.RESET_ALL}")
