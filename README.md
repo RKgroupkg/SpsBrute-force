@@ -147,13 +147,19 @@ After cloning the repository, follow these steps to run the `SpsBrute.py` script
 
    2. now install all the requirements
       ```bash
-      pip install aiohttp beautifulsoup4 tqdm colorama
+      pip install -r requirements.txt
       ```
 
    3. For help on how to input value use
     ```bash
      python SpsBrute.py -h
     ```
+
+   4. You can use the module by following command
+    ```bash
+    python SpsBrute.py
+    ```
+
 
     
 ### Disclaimer
