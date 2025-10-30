@@ -79,7 +79,7 @@ class SPSPurneaERP:
         login_url = f"{self.base_url}/ERP"
         payload = {
             '__RequestVerificationToken': self.verification_token,
-            'SessionName': '2024-2025',
+            'SessionName': '2025-2026',
             'LoginName': username,
             'Password': password,
         }
