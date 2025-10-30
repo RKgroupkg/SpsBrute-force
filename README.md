@@ -9,6 +9,7 @@ Welcome to **SpsBrute-force**, a powerful brute force tool designed for testing 
 ![SpsBrute-force Logo](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5f4E3rl9YbpO17er1dZGsCBygDt9x6TPgPw&usqp=CAU) <!-- Replace with your logo or a relevant image -->
 
 ### Penetration Testing Tool
+(unmaintained likely dead)
 
 Welcome to the **SpsBrute-force** repository! This tool is designed to assist in testing the security of your website by simulating various attack scenarios. Please ensure you have explicit permission before using this tool on any website.
 
